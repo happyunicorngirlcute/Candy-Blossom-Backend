@@ -1,0 +1,13 @@
+/* Enlève le texte API PLATFORM */
+.api-platform-header span {
+    display: none;
+}
+
+/* Change la couleur de la bande en rose */
+.api-platform-header {
+    background-color: #EF2865 !important;
+}
+
+.swagger-ui .topbar {
+    background-color: #EF2865 !important;
+}

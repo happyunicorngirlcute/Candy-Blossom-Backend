@@ -1,0 +1,51 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_profiler|_wdt|css|images|js|assets|build)/
+            security: false
+
+        # allow CORS preflight requests
+        options:
+            pattern: ^/
+            methods: [OPTIONS]
+            security: false
+
+        # login endpoint
+        login:
+            pattern: ^/login
+            stateless: true
+            json_login:
+                check_path: /login
+                username_path: email
+                password_path: password
+                success_handler: App\Security\JwtSuccessHandler
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        # JWT protected routes
+        api:
+            pattern: ^/
+            stateless: true
+            jwt: ~
+
+    access_control:
+        # public routes
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/verify-email$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+
+        # authenticated routes
+        - { path: ^/api/user, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/user, roles: IS_AUTHENTICATED_FULLY }
+
+        # everything else public for now
+        - { path: ^/, roles: PUBLIC_ACCESS }

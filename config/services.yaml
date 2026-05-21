@@ -1,0 +1,38 @@
+parameters:
+    resend.api_key: '%env(RESEND_API_KEY)%'
+    perenual.api_key: '%env(PERENUAL_API_KEY)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            $apiKey: '%perenual.api_key%'
+            $resendApiKey: '%resend.api_key%'
+
+    # charge tout App/
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # ton mailer OK
+    App\Service\ResendMailer:
+        arguments:
+            $apiKey: '%resend.api_key%'
+
+    App\Service\PerenualApiService:
+        arguments:
+            $apiKey: '%perenual.api_key%'
+
+    # 🔥 FIX IMPORTANT API PLATFORM PROCESSORS
+
+    App\State\RegisterUserProcessor:
+        arguments:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\State\SetCurrentUserProcessor:
+        arguments:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'

@@ -1,0 +1,19 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    # Session (OK même si API, souvent laissé activé par défaut)
+    session:
+        enabled: true
+
+    # Serializer (IMPORTANT pour Groups)
+    serializer:
+        enabled: true
+
+    # CSRF désactivé pour API (optionnel mais recommandé en backend API)
+    csrf_protection: false
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file

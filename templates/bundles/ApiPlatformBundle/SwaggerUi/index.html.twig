@@ -1,0 +1,22 @@
+{% extends '@!ApiPlatform/SwaggerUi/index.html.twig' %}
+
+{% block header %}
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        header, 
+        header a,
+        .api-platform-header,
+        body > header {
+            background-color: #EF2865 !important;
+            background: #EF2865 !important;
+        }
+
+        /* Override le teal d'API Platform */
+        :root {
+            --topbar-background: #EF2865 !important;
+        }
+    </style>
+{% endblock %}

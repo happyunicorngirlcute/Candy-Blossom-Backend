@@ -1,0 +1,16 @@
+api_platform:
+    title: Candy Blossom API
+    version: 1.0.0
+    show_webby: true
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
+    openapi:
+        swagger_ui_extra_configuration:
+            customCss: '.swagger-ui .topbar { background-color: #ff6b9d !important; } .swagger-ui .topbar .topbar-wrapper .link span { display: none !important; } .swagger-ui .opblock-summary-method, .swagger-ui .authorize, .swagger-ui .btn, .swagger-ui .opblock-tag, .swagger-ui .tablinks { user-select: none !important; }'
